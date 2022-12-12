@@ -95,7 +95,7 @@ public struct UserLexicon {
                                                 throw ULError.badFinal
                                         }
                                 } else {
-                                        let lingShingMou: Bool = finals.contains(String(syllable))
+                                        let lingShingMou: Bool = finals.contains(String(withoutTone))
                                         guard !lingShingMou else { return }
                                         let final = withoutTone.dropFirst()
                                         guard finals.contains(String(final)) else {
