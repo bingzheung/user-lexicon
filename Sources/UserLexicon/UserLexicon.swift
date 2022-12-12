@@ -6,7 +6,7 @@ private enum ULError: Error {
         case fileIsEmpty
         case badLineFormat
         case badWord
-        case hasSpacesInRomanizationTails
+        case badRomanizationHeadTail
         case characterCountNotEqualToSyllableCount
         case badTone
         case badInitial
@@ -44,7 +44,6 @@ public struct UserLexicon {
                         .trimmingCharacters(in: .whitespacesAndNewlines)
                         .trimmingCharacters(in: .controlCharacters)
                         .components(separatedBy: .newlines)
-                        .map({ $0.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .controlCharacters) })
                         .filter({ !($0.isEmpty || $0.hasPrefix("#")) })
                 guard !sourceLines.isEmpty else {
                         print("File Path: \(filePath)")
@@ -66,10 +65,10 @@ public struct UserLexicon {
                                 print("LineText: \(line)")
                                 throw ULError.badWord
                         }
-                        let hasSpacesInRomanizationTails: Bool = romanization.hasPrefix(" ") || romanization.hasSuffix(" ")
-                        guard !hasSpacesInRomanizationTails else {
+                        let isFineRomanizationHeadTail: Bool = romanization.first!.isLetter && romanization.last!.isNumber
+                        guard isFineRomanizationHeadTail else {
                                 print("LineText: \(line)")
-                                throw ULError.hasSpacesInRomanizationTails
+                                throw ULError.badRomanizationHeadTail
                         }
 
                         let syllables = romanization.split(separator: " ")
