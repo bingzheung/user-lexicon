@@ -2,13 +2,13 @@ name: CI
 on: [push, pull_request, release]
 
 # env:
-#   DEVELOPER_DIR: /Applications/Xcode_14.2.app/Contents/Developer
+#   DEVELOPER_DIR: /Applications/Xcode_14.3.app/Contents/Developer
 
 jobs:
-  check-lexicon:
+  checklexicon:
     name: CheckLexicon
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: UserLexicon SwiftRun
+      - uses: actions/checkout@v3
+      - name: Swift Run
         run: swift run -c release
